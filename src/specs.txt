@@ -1,0 +1,41 @@
+projects table
+pid
+pname
+pdescription
+pprogress
+
+tasks table
+tid
+tname
+tdesc
+tprogress
+pid
+
+assetsindex table
+aid  
+ref
+info
+pid
+tid
+
+dailytasks
+did
+dname
+ddate
+dstatus
+
+setdailytasks
+sid
+sname
+
+PATHS
+
+todo:
+Allow editing of task details
+Allow delete on tasks
+Allow delete of assets
+upload images and store link
+
+Add links and images with different buttons
+
+
