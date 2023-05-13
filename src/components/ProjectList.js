@@ -15,6 +15,7 @@ const ProjectList = () => {
   const [deletetask, setDeletetask] = useState(null);
   const [deletetaskpid, setDeletetaskpid] = useState(null);
   const [status, setStatus] = useState("");
+  const[progress, setProgress]=useState(0)
 
   const handleDetailsClick = (task) => {
     setSelectedTask(task); // Set selected task when "Details" button is clicked
@@ -51,17 +52,22 @@ const ProjectList = () => {
         timeout: 10000,
       })
       .then((response) => {
+        console.log("progress"+response.data.progress)
         console.log(response.data);
         setRecords(response.data);
         setStatus("");
+        setProgress(response.progress);
+
       })
       .catch((error) => {
         console.error("There was an error" + error);
       });
+      
   };
 
   useEffect(() => {
     getRecords();
+    
   }, []);
 
   const onProjectAdded = () => {
@@ -79,6 +85,7 @@ const ProjectList = () => {
         <DailyTasks />
       </div>
       <div>Status:{status}</div>
+      <div>{progress}</div>
       <table>
         <thead>
           <tr>

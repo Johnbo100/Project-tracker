@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FormData from "form-data";
-import FileViewer from "./FileViewer";
+
 
 const TaskDetails = ({ task, onCloseClick }) => {
   const [file, setFile] = useState("");
@@ -10,7 +10,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
   const [tprogress, setTprogress] = useState("");
   const [tdata, setTdata] = useState(null);
   const [adata, setAdata] = useState(null);
-  const [feedback, setFeedback] = useState("Nothing changed yet");
+  const [feedback, setFeedback] = useState("GETTING DATA...");
 
   
   const handleFileChange = (event) => {
@@ -45,7 +45,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
           progress: tprogress,
         },
         { timeout: 10000 }
-      ) // Send AJAX request to server
+      ) 
       .then((response) => {
         console.table(response.data);
         setFeedback("Task updated");
@@ -64,7 +64,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
           tid: task,
         },
         timeout: 10000,
-      }) // Send AJAX request to server
+      }) 
       .then((resp) => {
         console.log(resp.data);
         setTdata(resp.data);
@@ -84,7 +84,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
           tid: task,
         },
         timeout: 10000,
-      }) // Send AJAX request to server
+      }) 
       .then((resp) => {
         console.log(resp.data);
         setAdata(resp.data);
@@ -121,7 +121,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
 
   const changefilename = (path) => {
     const filePath = path;
-    const domainName = process.env.REACT_APP_UPLOAD; // domain name to add before the filename
+    const domainName = process.env.REACT_APP_UPLOAD; 
     const filename = filePath.substring(filePath.lastIndexOf("\\") + 1);
     const url = `${domainName}/${filename}`;
     return url
