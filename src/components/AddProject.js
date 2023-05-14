@@ -13,7 +13,7 @@ const AddProject = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        props.onProjectAdded(); // Call the onProjectAdded function provided as a prop
+        props.onProjectAdded();
         setPname("");
         setPdesc("");
       })

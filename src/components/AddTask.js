@@ -26,12 +26,12 @@ const AddTask = (props) => {
         });
     };
   return (
-    <div className='addtask'>
-        <input type = "text" onChange={(e)=>setTaskname(e.target.value)} placeholder='task name'/> 
-        <input type = "text" onChange={(e)=>setTaskdesc(e.target.value)} placeholder='task desc'/> 
+    <tr className='addtask'>
+        <td><input type = "text" onChange={(e)=>setTaskname(e.target.value)} placeholder='task name'/> </td>
+        <td><input type = "text" onChange={(e)=>setTaskdesc(e.target.value)} placeholder='task desc'/> </td>
 
-        <button onClick={addTask}><GrAddCircle />Add a new task</button>
-    </div>
+        <td><button onClick={addTask}><GrAddCircle />Add a new task</button></td>
+    </tr>
   )
 }
 

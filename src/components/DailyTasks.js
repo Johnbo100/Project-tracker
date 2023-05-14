@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { AiOutlineDelete } from 'react-icons/ai';
-import { MdDoneAll } from 'react-icons/md'
+import { AiOutlineDelete } from "react-icons/ai";
+import { MdDoneAll } from "react-icons/md";
 
 const DailyTasks = () => {
   const [data, setData] = useState(null);
   const [dailytaskname, setDailytaskname] = useState("");
   const [setdailytasksdata, setSetdailytasksdata] = useState(null);
   const [newdate, setNewdate] = useState(null);
-  const [finishdata, setFinishdata] = useState([]);
   const [today, setToday] = useState("");
 
   //add to setdailytasks table
@@ -21,15 +20,15 @@ const DailyTasks = () => {
         ddate: date,
       })
       .then((response) => {
-        console.log(response.data);
-        setSetdailytasksdata(prevTasks => prevTasks.filter(task => task.sname !== taskName))
+        setSetdailytasksdata((prevTasks) =>
+          prevTasks.filter((task) => task.sname !== taskName)
+        );
       })
       .catch((error) => {
         console.error("There was an error" + error);
       });
   };
 
-  //remove from setdailytasks table
   const deletesetdailytask = (e, sid) => {
     e.preventDefault();
     axios
@@ -63,11 +62,6 @@ const DailyTasks = () => {
       });
   };
 
-  // get from dailytasks table
-  const getalldailytasks = () => {};
-
-  const finishday = () => {};
-
   const addsetdailytask = () => {
     axios
       .post(process.env.REACT_APP_ADDSETDAILYTASK, {
@@ -82,8 +76,7 @@ const DailyTasks = () => {
       });
   };
 
-  useEffect(() => {
-    getallsetdailytasks();
+  const setDate = () => {
     let today = new Date();
     let date =
       today.getFullYear() +
@@ -92,15 +85,17 @@ const DailyTasks = () => {
       "-" +
       today.getDate();
     setNewdate(date);
-    console.log("The date is:" + date);
-
     const date1 = new Date().toISOString().split("T")[0];
-    setToday(date1);
+    return date1;
+  };
+
+  useEffect(() => {
+    getallsetdailytasks();
+    setToday(setDate());
   }, []);
 
   return (
     <div className="dailytasks">
-    
       <div className="dailytaskscroll">
         <table>
           <thead>
@@ -122,11 +117,11 @@ const DailyTasks = () => {
                         onClick={(e) => adddonetask(t.sname)}
                       >
                         <MdDoneAll />
-                        </button>
+                      </button>
                     </td>
                     <td>
                       <button onClick={(e) => deletesetdailytask(e, t.sid)}>
-                        <AiOutlineDelete/>
+                        <AiOutlineDelete />
                       </button>
                     </td>
                   </tr>
@@ -138,7 +133,7 @@ const DailyTasks = () => {
           <input
             type="text"
             onChange={(e) => setDailytaskname(e.target.value)}
-            Placeholder="Task name"
+            placeholder="Task name"
           />
           <button onClick={addsetdailytask}>Add daily task</button>
         </div>
