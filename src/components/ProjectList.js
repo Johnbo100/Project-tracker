@@ -17,6 +17,8 @@ const ProjectList = () => {
   const [progress, setProgress] = useState(0);
 
   const { projects, setProjects } = useContext(ProjectContext);
+
+  
   const handleDetailsClick = (task) => {
     setSelectedTask(task); // Set selected task when "Details" button is clicked
   };
@@ -27,6 +29,7 @@ const ProjectList = () => {
   const handleCloseDeleteProject = () => {
     setDeleteproject(null);
   };
+  
   const handleCloseDeleteTask = () => {
     setDeletetask(null);
   };
