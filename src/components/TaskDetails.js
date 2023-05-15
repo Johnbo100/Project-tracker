@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import FormData from "form-data";
 import { ProjectContext } from "../App";
+import imageCompression from 'browser-image-compression';
 
 const TaskDetails = ({ task, onCloseClick }) => {
-  const [file, setFile] = useState("");
+  const [imgfile, setImgfile] = useState("");
   const [tname, setTname] = useState("");
   const [tdesc, setTdesc] = useState("");
   const [tprogress, setTprogress] = useState("");
@@ -14,14 +15,19 @@ const TaskDetails = ({ task, onCloseClick }) => {
   const { projects, setProjects } = useContext(ProjectContext);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    setImgfile(event.target.files[0]);
+    console.log("imgfile:"+imgfile.name)
   };
 
-  const upload = (e) => {
-    e.preventDefault();
+  
+  const upload = (compressedImage) => {
+    
     let formData = new FormData();
-    formData.append("jkj", file);
+    setFeedback("Uploading. Please wait...")
+    formData.append("jkj", compressedImage);
+    console.log("compressedImage data"+compressedImage)
     formData.append("taskid", task);
+    formData.append("imagename", imgfile.name.split(".")[0]);
     axios
       .post(process.env.REACT_APP_UPLOAD, formData, {
         headers: {
@@ -31,8 +37,36 @@ const TaskDetails = ({ task, onCloseClick }) => {
       .then((res) => {
         console.log("Success ", res.data.filename);
         getassets();
+        setFeedback("")
       });
   };
+
+
+  async function handleImageUpload(e) {
+    e.preventDefault();
+
+    const imageFile = imgfile;
+    console.log("in the handleimageupload function")
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+  
+      upload(compressedFile); // write your own logic
+    } catch (error) {
+      console.log(error);
+    }
+  
+  }
+
 
   const handleUpdate = () => {
     setFeedback("Processing...");
@@ -141,7 +175,7 @@ const TaskDetails = ({ task, onCloseClick }) => {
     const filePath = path;
     const domainName = process.env.REACT_APP_UPLOAD;
     const filename = filePath.substring(filePath.lastIndexOf("\\") + 1);
-    const url = `${domainName}/${filename}`;
+    const url = `${domainName}/${filename}.jpg`;
     return url;
   };
 
@@ -237,10 +271,11 @@ const TaskDetails = ({ task, onCloseClick }) => {
         <div>
           <div className="add-file">
             Add a file
-            <input type="file" onChange={handleFileChange} />
-            <button classname="task-details-btn" onClick={(e) => upload(e)}>
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <button classname="task-details-btn" onClick={(e) => handleImageUpload(e)}>
               Submit
             </button>
+            {feedback}
           </div>
         </div>
       </div>
