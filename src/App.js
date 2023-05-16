@@ -9,6 +9,7 @@ export const ProjectContext = createContext();
 function App() {
   const [projects, setProjects] = useState(null);
   const [enter, setEnter] = useState(false);
+  const [status, setStatus] =useState("")
 
   useEffect(() => {
     getRecords();
@@ -36,8 +37,8 @@ function App() {
     <div className="App">
       <button onClick={() => setEnter(true)} className="startbtn">-</button>
       {enter && (
-        <ProjectContext.Provider value={{ projects, setProjects }}>
-          <Header />
+        <ProjectContext.Provider value={{ status, setStatus, projects, setProjects, getRecords}}>
+          <Header status={status}/>
           <ProjectList />
         </ProjectContext.Provider>
       )}

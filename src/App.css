@@ -100,6 +100,10 @@ button , input[type="file"]{
     font-size: xx-large;
     color: #ffffffd4;
     padding: 20px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 input, select, textarea{
   border-radius: 5px;
@@ -193,6 +197,13 @@ input, select, textarea{
 .startbtn{
   background-color: #92b0e0;
   margin:0;
+}
+.status{
+  font-size: medium;
+  color: coral;
+  margin-left:30px; 
+  background: white;
+  padding:10px 30px 10px 30px;
 }
 .subhead{
   display: flex;
@@ -306,7 +317,8 @@ input, select, textarea{
     max-width: 100vw;
   }
   .task-name{
-      max-width: 20vw;
+    width: 10vw;
+      max-width: 10vw;
   }
   .task-desc{
     max-width: 50vw;

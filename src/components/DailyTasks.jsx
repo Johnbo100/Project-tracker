@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdDoneAll } from "react-icons/md";
+import { ProjectContext } from "../App";
 
 const DailyTasks = () => {
   const [data, setData] = useState(null);
@@ -10,6 +11,7 @@ const DailyTasks = () => {
   const [setdailytasksdata, setSetdailytasksdata] = useState(null);
   const [newdate, setNewdate] = useState(null);
   const [today, setToday] = useState("");
+  const { setStatus} = useContext(ProjectContext);
 
   //add to setdailytasks table
   const adddonetask = (taskName) => {
@@ -23,6 +25,7 @@ const DailyTasks = () => {
         setSetdailytasksdata((prevTasks) =>
           prevTasks.filter((task) => task.sname !== taskName)
         );
+        setStatus("Daily task completed")
       })
       .catch((error) => {
         console.error("There was an error" + error);
@@ -41,6 +44,7 @@ const DailyTasks = () => {
       .then((response) => {
         console.log(response.data);
         getallsetdailytasks();
+        setStatus("Set daily task has been removed")
       })
       .catch((error) => {
         console.error("There was an error" + error);
@@ -70,6 +74,7 @@ const DailyTasks = () => {
       .then((response) => {
         console.log(response.data);
         getallsetdailytasks();
+        setStatus("New  set daily task added")
       })
       .catch((error) => {
         console.error("There was an error" + error);

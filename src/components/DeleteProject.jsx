@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
+import { ProjectContext } from "../App";
+
 
 const DeleteProject = ({ pid, onCloseClick }) => {
-  const [status, setStatus] = useState("");
-
+  
+  const { setStatus, getRecords} = useContext(ProjectContext);
   const confirmDelete = () => {
     axios
       .delete(process.env.REACT_APP_DELETEPROJECT, {
@@ -29,7 +31,6 @@ const DeleteProject = ({ pid, onCloseClick }) => {
         <h3>Are you sure you want to permanently delete this project?</h3>
         <button onClick={confirmDelete}>Yes</button>
         <button onClick={onCloseClick}>No</button>
-        {status && <p>{status}</p>} {}
       </div>
     </div>
   );

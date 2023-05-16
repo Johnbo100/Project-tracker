@@ -7,7 +7,7 @@ const DeleteTask = ({ tid, pid, onCloseClick }) => {
   const [status, setStatus] = useState("") // State variable for displaying status message
     console.log("TID=:"+tid)
     console.log("PID=:"+pid)
-    // Function to confirm project deletion
+   
   const confirmDelete = () => {
     axios
       .delete(process.env.REACT_APP_DELETETASK, {

@@ -13,10 +13,9 @@ const ProjectList = () => {
   const [deleteproject, setDeleteproject] = useState(null);
   const [deletetask, setDeletetask] = useState(null);
   const [deletetaskpid, setDeletetaskpid] = useState(null);
-  const [status, setStatus] = useState("");
   const [progress, setProgress] = useState(0);
 
-  const { projects, setProjects } = useContext(ProjectContext);
+  const { status, setStatus, projects, setProjects, getRecords } = useContext(ProjectContext);
 
   
   const handleDetailsClick = (task) => {
@@ -24,14 +23,17 @@ const ProjectList = () => {
   };
 
   const handleCloseClick = () => {
-    setSelectedTask(null); // Clear selected task when popup is closed
+    setSelectedTask(null); 
+    getRecords()
   };
   const handleCloseDeleteProject = () => {
     setDeleteproject(null);
+    getRecords()
   };
   
   const handleCloseDeleteTask = () => {
     setDeletetask(null);
+    getRecords()
   };
 
   const deleteTask = (e, tid, pid) => {
@@ -60,17 +62,18 @@ const ProjectList = () => {
   };
 
   const onTaskadded = () => {
-    //add details to projects object
+   getRecords()
+  };
+  const onProjectAdded = () => {
+    getRecords()
   };
 
   return (
     <div className="project-list">
       <div className="subhead">
-        <AddProject />
+        <AddProject onProjectAdded={onProjectAdded}/>
         <DailyTasks />
       </div>
-      <div>Status:{status}</div>
-      <div>{progress}</div>
       <table>
         <thead>
           <tr>
